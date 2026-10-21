@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<title>Ace</title>
+<style>
+:root{--bg:#212121;--sidebar:#171717;--panel:#272727;--panel2:#303030;--line:#3b3b3b;--muted:#969696;--text:#ededed;--blue:#6685ff;--radius:16px;--sidebar-w:262px}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px}button,input,textarea,select{font:inherit}button{color:inherit;cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #8da2ff;outline-offset:2px}button:disabled{opacity:.45;cursor:not-allowed}.hidden{display:none!important}.app{height:100dvh;display:flex;overflow:hidden}.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--sidebar);border-right:1px solid #292929;display:flex;flex-direction:column;transition:width .2s,min-width .2s;z-index:3}.sidebar.collapsed{width:0;min-width:0;border:0;overflow:hidden}.brand{height:58px;display:flex;align-items:center;gap:10px;padding:0 18px;font-weight:650;font-size:17px}.brand-mark{color:#6d8bff;font-size:21px;line-height:1}.icon-btn{border:0;background:transparent;color:#aaa;border-radius:9px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.icon-btn:hover{background:#303030;color:#fff}.brand .collapse-btn{margin-left:auto}.sidebar-actions{padding:0 12px 10px;display:grid;gap:9px}.new-chat{height:37px;border:1px solid #383838;border-radius:12px;background:transparent;display:flex;align-items:center;gap:12px;padding:0 13px;font-weight:550;text-align:left}.new-chat:hover{background:#232323;border-color:#4a4a4a}.search-wrap{position:relative}.search-wrap svg{position:absolute;left:11px;top:11px;color:#8d8d8d}.search{height:36px;border-radius:11px;border:1px solid transparent;background:#292929;color:var(--text);width:100%;padding:0 10px 0 35px;outline:0}.search:focus{border-color:#505050}.history{overflow:auto;flex:1;padding:6px 8px 12px}.group-label{font-size:11px;letter-spacing:.04em;color:#909090;font-weight:700;padding:13px 10px 7px}.chat-link{display:flex;align-items:center;gap:7px;min-height:36px;padding:8px 10px;border-radius:10px;cursor:pointer;color:#d0d0d0;margin-bottom:2px}.chat-link:hover{background:#272727}.chat-link.active{background:#393939;color:white}.chat-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}.chat-tools{display:none;gap:1px}.chat-link:hover .chat-tools,.chat-link.active .chat-tools{display:flex}.mini-action{border:0;background:transparent;color:#aaa;padding:2px 3px;border-radius:5px;font-size:12px}.mini-action:hover{background:#555;color:white}.sidebar-bottom{border-top:1px solid #2b2b2b;padding:11px 12px 12px;display:grid;gap:4px}.bottom-item{display:flex;align-items:center;gap:10px;padding:7px 8px;border:0;background:transparent;border-radius:8px;color:#c3c3c3;text-align:left}.bottom-item:hover{background:#272727}.user-row{display:flex;align-items:center;gap:10px;padding:8px 8px 2px}.avatar{width:31px;height:31px;border-radius:50%;background:#6578f8;display:grid;place-items:center;color:white;font-weight:650;flex-shrink:0}.small-muted{color:#999;font-size:11px}.main{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;background:var(--bg)}.topbar{height:54px;min-height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 17px;gap:12px;z-index:2}.top-left{display:flex;gap:5px;align-items:center}.top-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;background:#303030;border-radius:22px;padding:3px;gap:2px}.seg{border:0;background:transparent;color:#aaa;border-radius:18px;padding:7px 16px;font-size:13px;font-weight:600}.seg.active{background:#efefef;color:#202020}.top-right{margin-left:auto;display:flex;align-items:center;gap:5px}.model-pill{border:1px solid #424242;color:#c9c9c9;background:transparent;border-radius:22px;padding:7px 12px;display:flex;align-items:center;gap:7px;font-size:12px}.model-pill:hover{background:#2b2b2b}.chat-scroll{flex:1;overflow-y:auto;scrollbar-color:#444 transparent;scrollbar-width:thin;padding:3px 20px 190px}.messages{max-width:760px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:25px}.welcome{min-height:45vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:35px 10px}.welcome-mark{width:54px;height:54px;border:1px solid #454545;border-radius:19px;display:grid;place-items:center;font-size:28px;color:#8091ff;background:linear-gradient(145deg,#2d2d2d,#212121);box-shadow:0 8px 30px #0002}.welcome h1{font-size:24px;font-weight:590;letter-spacing:-.035em;margin:3px 0 0}.welcome p{color:#aaa;margin:0;font-size:14px}.suggestions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}.suggestion{border:1px solid #414141;background:transparent;color:#c5c5c5;border-radius:13px;padding:10px 13px}.suggestion:hover{background:#2b2b2b;color:white}.message{display:flex;flex-direction:column;gap:8px;animation:rise .18s ease both}.message.user{align-items:flex-end}.user-bubble{background:#303030;border-radius:19px 19px 5px 19px;padding:11px 15px;max-width:min(88%,620px);white-space:pre-wrap;line-height:1.55;overflow-wrap:anywhere}.message-head{display:flex;align-items:center;gap:9px;color:#e5e5e5;font-weight:600}.bot-avatar{width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:#6577ff;color:white;font-size:17px}.model-tag{font-size:10px;color:#aaa;background:#303030;border-radius:12px;padding:4px 8px;font-weight:550}.bot-body{padding-left:41px;line-height:1.7;color:#e3e3e3;overflow-wrap:anywhere}.bot-body p{margin:0 0 12px}.bot-body h1,.bot-body h2,.bot-body h3{line-height:1.35;margin:15px 0 8px;font-weight:650}.bot-body h1{font-size:21px}.bot-body h2{font-size:18px}.bot-body h3{font-size:16px}.bot-body ul,.bot-body ol{padding-left:22px;margin:4px 0 13px}.bot-body li{margin:4px 0}.bot-body pre{white-space:pre;overflow:auto;background:#111;border:1px solid #383838;border-radius:10px;padding:13px;font-size:12px;line-height:1.5}.bot-body code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#303030;border-radius:5px;padding:2px 4px;font-size:.9em}.bot-body pre code{background:none;padding:0}.bot-actions{display:flex;align-items:center;gap:4px;margin:2px 0 0 39px}.bot-actions button{border:0;background:transparent;color:#8d8d8d;border-radius:7px;padding:6px;font-size:12px}.bot-actions button:hover{color:#eee;background:#303030}.typing{display:flex;align-items:center;gap:5px;padding:4px 0}.typing span{width:5px;height:5px;border-radius:50%;background:#c5c5c5;animation:dot 1s infinite ease-in-out}.typing span:nth-child(2){animation-delay:.12s}.typing span:nth-child(3){animation-delay:.24s}.flow-card{position:relative;isolation:isolate;border-radius:15px;overflow:visible}.flow-card::before{content:"";position:absolute;inset:-1px;border-radius:16px;background:conic-gradient(from var(--angle,0deg),transparent 0 27%,#fff 34%,#bfcaff 40%,transparent 49% 78%,#ddd 86%,transparent 91%);opacity:0;z-index:-1;transition:opacity .55s ease;animation:spin-flow 2.8s linear infinite}.flow-card::after{content:"";position:absolute;inset:1px;border-radius:14px;background:var(--bg);z-index:-1;opacity:0;transition:opacity .55s ease}.flow-card.flowing::before,.flow-card.flowing::after{opacity:1}.flow-card.flowing .bot-body{padding-top:12px;padding-bottom:7px}.composer-wrap{position:absolute;bottom:0;left:0;right:0;padding:22px 20px 10px;background:linear-gradient(180deg,transparent 0%,rgba(33,33,33,.9) 23%,var(--bg) 46%);z-index:2}.composer-inner{max-width:770px;margin:0 auto}.file-previews{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.file-chip{border:1px solid #464646;background:#2b2b2b;border-radius:10px;padding:7px 9px;display:flex;align-items:center;gap:8px;max-width:230px;font-size:12px;color:#d4d4d4}.file-chip .fname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.file-chip button{background:none;border:0;color:#999;padding:1px 2px}.composer{border:1px solid #484848;border-radius:25px;background:#292929;box-shadow:0 5px 22px #0002;overflow:hidden}.composer:focus-within{border-color:#5b5b5b}.prompt{display:block;width:100%;background:transparent;border:0;resize:none;color:#eee;outline:0;min-height:45px;max-height:190px;padding:14px 18px 4px;line-height:1.5}.prompt::placeholder{color:#919191}.composer-row{display:flex;align-items:center;gap:5px;padding:0 9px 8px 12px}.composer-tools{display:flex;align-items:center;gap:3px;flex:1;min-width:0}.tool-btn{border:0;background:transparent;color:#aaa;border-radius:9px;padding:7px 9px;font-size:12px;font-weight:550;display:flex;align-items:center;gap:6px;white-space:nowrap}.tool-btn:hover{background:#383838;color:#eee}.tool-btn.on{color:#d9e0ff;background:#353c55}.send-btn{width:37px;height:37px;border-radius:50%;border:0;background:#efefef;color:#222;display:grid;place-items:center;font-size:20px}.send-btn:hover{background:white}.stop-btn{width:37px;height:37px;border-radius:50%;border:1px solid #666;background:#3b3b3b;color:white}.footnote{font-size:11px;color:#858585;text-align:center;padding-top:8px;min-height:22px}.footnote a{color:#8eabff;text-decoration:none}.status-dot{display:inline-block;width:7px;height:7px;background:#696969;border-radius:50%;margin-right:5px}.status-dot.good{background:#6fce99}.status-dot.bad{background:#f18b8b}.toast{position:fixed;z-index:50;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.22s;background:#343434;border:1px solid #555;border-radius:13px;padding:12px 16px;max-width:min(90vw,560px);box-shadow:0 10px 35px #0005;color:#efefef}.toast.show{opacity:1;transform:translate(-50%,0)}.overlay{position:fixed;inset:0;z-index:20;background:#0009;display:grid;place-items:center;padding:18px}.modal{width:min(560px,100%);max-height:min(88dvh,760px);overflow:auto;background:#222;border:1px solid #414141;border-radius:20px;box-shadow:0 20px 80px #0009;padding:22px}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.modal h2{font-size:19px;font-weight:630;margin:0}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:12px;color:#bdbdbd}.field input,.field textarea,.field select{width:100%;border:1px solid #474747;border-radius:10px;background:#191919;color:#eee;padding:11px 12px;outline:0}.field textarea{min-height:80px;resize:vertical}.help{font-size:12px;color:#969696;line-height:1.55}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}.btn{border:1px solid #494949;background:#292929;border-radius:10px;padding:10px 13px;color:#e7e7e7}.btn:hover{background:#373737}.btn.primary{background:#efefef;color:#222;border-color:#efefef;font-weight:650}.btn.primary:hover{background:white}.checkbox-row{display:flex;align-items:flex-start;gap:9px;color:#c8c8c8;font-size:12px;line-height:1.5}.pin-screen{position:fixed;inset:0;z-index:100;background:#171717;display:flex;align-items:center;justify-content:center;padding:22px}.pin-box{width:min(380px,100%);display:flex;flex-direction:column;align-items:stretch;gap:16px}.pin-logo{margin:0 auto;width:54px;height:54px;border:1px solid #404040;border-radius:18px;display:grid;place-items:center;color:#7e98ff;font-size:28px;background:#232323}.pin-box h1{font-size:25px;letter-spacing:-.035em;text-align:center;margin:0;font-weight:620}.pin-box>p{text-align:center;color:#999;margin:-8px 0 8px;font-size:13px}.pin-box label{font-size:12px;color:#bcbcbc}.pin-box input{width:100%;background:#222;border:1px solid #424242;border-radius:11px;padding:13px;color:#eee;margin-top:7px;outline:0}.pin-box .btn{width:100%;padding:12px}.access-link{border:0;background:transparent;color:#b6b6b6;text-decoration:none;font-size:12px;padding:6px}.access-link:hover{color:#fff}.pin-error{color:#f39b9b;text-align:center;font-size:12px;min-height:15px}.access-info{font-size:12px;line-height:1.65;color:#a7a7a7;padding:13px;background:#222;border:1px solid #333;border-radius:12px}.memory-list{display:grid;gap:8px}.memory-item{display:flex;gap:10px;border:1px solid #383838;border-radius:10px;padding:10px;align-items:flex-start}.memory-item span{flex:1;line-height:1.5}.empty-memory{color:#929292;font-size:13px;padding:12px 0}.message-image{max-width:270px;max-height:230px;object-fit:contain;border-radius:10px;border:1px solid #444;margin-top:8px;display:block}.key-warning{background:#2a2822;border:1px solid #574c31;border-radius:10px;padding:10px;color:#d8cba7;font-size:12px;line-height:1.5}.connection-result{border:1px solid #3d3d3d;border-radius:10px;padding:11px;font-size:12px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.connection-result.ok{border-color:#315743;color:#bde8cd}.connection-result.bad{border-color:#704444;color:#ffc5c5}
+@keyframes spin-flow{to{--angle:360deg}}@property --angle{syntax:'<angle>';initial-value:0deg;inherits:false}@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.42}30%{transform:translateY(-4px);opacity:1}}
+@media(max-width:700px){:root{--sidebar-w:270px}.sidebar{position:absolute;left:0;top:0;bottom:0;box-shadow:15px 0 35px #0005}.sidebar.collapsed{width:0;min-width:0;box-shadow:none}.topbar{padding:0 8px;height:50px;min-height:50px}.top-center{position:static;transform:none;margin-left:auto}.top-right{gap:0}.top-right .model-pill{display:none}.chat-scroll{padding:0 13px 185px}.messages{gap:21px}.bot-body{padding-left:0}.bot-actions{margin-left:0}.composer-wrap{padding:16px 10px 8px}.tool-btn{padding:7px;font-size:11px}.tool-label{display:none}.footnote{font-size:10px}.suggestion{font-size:12px;padding:9px 10px}.user-bubble{max-width:94%}.welcome{min-height:38vh}.welcome h1{font-size:22px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="pinScreen" class="pin-screen">
+  <form id="pinForm" class="pin-box">
+    <div class="pin-logo">ϟ</div>
+    <h1>Ace</h1>
+    <p>Your personal dashboard workspace</p>
+    <div><label for="accessCode">Access code</label><input id="accessCode" type="password" autocomplete="current-password" placeholder="Enter your access code" required /></div>
+    <div id="pinError" class="pin-error" aria-live="polite"></div>
+    <button class="btn primary" type="submit">Unlock workspace</button>
+    <button type="button" id="accessRequestBtn" class="access-link">Get an access code for free</button>
+  </form>
+</div>
+<div id="app" class="app hidden">
+  <aside id="sidebar" class="sidebar">
+    <div class="brand"><span class="brand-mark">ϟ</span><span>Ace</span><button class="icon-btn collapse-btn" id="collapseSidebar" aria-label="Collapse sidebar" title="Collapse sidebar">◫</button></div>
+    <div class="sidebar-actions">
+      <button id="newChatBtn" class="new-chat"><span style="font-size:20px;color:#aaa">＋</span> New chat</button>
+      <div class="search-wrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input class="search" id="chatSearch" placeholder="Search chats (Ctrl+K)" aria-label="Search chats" /></div>
+    </div>
+    <nav id="history" class="history" aria-label="Saved chats"></nav>
+    <div class="sidebar-bottom">
+      <button class="bottom-item" id="memoryBtn"><span>◉</span> <span>Memory</span> <span id="memoryCount" class="small-muted">0</span></button>
+      <button class="bottom-item" id="settingsBtn"><span>⚙</span> Settings</button>
+      <div class="user-row"><div class="avatar">A</div><div><div style="font-weight:600;font-size:12px">You</div><div class="small-muted"><span class="status-dot" id="statusDot"></span><span id="saveState">Saved on this device</span></div></div></div>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div class="top-left"><button id="showSidebar" class="icon-btn" title="Show sidebar" aria-label="Show sidebar">☰</button></div>
+      <div class="top-center"><button class="seg active" id="chatModeBtn">Chat</button><button class="seg" id="agentModeBtn" title="Agent mode is not configured in this version">Agent</button></div>
+      <div class="top-right">
+        <button class="model-pill" id="smartModelBtn"><span>☆</span><span id="activeModelLabel">Smart models</span><span>⌄</span></button>
+        <button class="icon-btn" id="exportBtn" aria-label="Export chat" title="Export conversation">⇩</button>
+        <button class="icon-btn" id="printBtn" aria-label="Print" title="Print conversation">▤</button>
+        <button class="icon-btn" id="topSettingsBtn" aria-label="Settings" title="Settings">⚙</button>
+      </div>
+    </header>
+    <section id="chatScroll" class="chat-scroll" aria-label="Conversation">
+      <div id="messages" class="messages"></div>
+    </section>
+    <div class="composer-wrap">
+      <div class="composer-inner">
+        <div id="filePreviews" class="file-previews"></div>
+        <div class="composer">
+          <textarea id="prompt" class="prompt" rows="1" placeholder="Ask anything — homework, essays, quizzes, research" aria-label="Message"></textarea>
+          <div class="composer-row">
+            <div class="composer-tools">
+              <button id="attachBtn" class="tool-btn" title="Attach files" aria-label="Attach files"><span style="font-size:20px;line-height:12px">＋</span><span class="tool-label">Attach</span></button>
+              <input id="fileInput" type="file" multiple accept=".pdf,.txt,.md,.csv,.json,.html,.htm,.css,.js,.xml,.docx,.png,.jpg,.jpeg,.webp,.gif" hidden />
+              <button class="tool-btn" data-mode="think" title="Use more deliberate reasoning">Think</button>
+              <button class="tool-btn" data-mode="deep" title="Ask for a thorough, structured answer">Deep</button>
+              <button class="tool-btn" data-mode="web" title="Live web search is not configured">Web</button>
+              <button class="tool-btn" data-mode="essay" title="Use an essay-style response">Essay</button>
+            </div>
+            <button id="sendBtn" class="send-btn" title="Send message" aria-label="Send message">↑</button>
+            <button id="stopBtn" class="stop-btn hidden" title="Stop generation" aria-label="Stop generation">■</button>
+          </div>
+        </div>
+        <div class="footnote">Ace can make mistakes — check what matters. <a href="#" id="memoryInline">0 memories in context</a></div>
+      </div>
+    </div>
+  </main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="modalHost"></div>
+<script>
+(() => {
+'use strict';
+const $ = (s, root=document) => root.querySelector(s);
+const $$ = (s, root=document) => Array.from(root.querySelectorAll(s));
+const FREE_MODELS = [
+  {id:'openai/gpt-oss-20b', name:'GPT-OSS 20B', type:'text', note:'Groq · general chat'},
+  {id:'openai/gpt-oss-120b', name:'GPT-OSS 120B', type:'text', note:'Groq · stronger reasoning'},
+  {id:'qwen/qwen3.8-27b', name:'Qwen 3.8 27B', type:'vision', note:'Groq · text + image understanding'}
+];
+const DEFAULT_ENDPOINT = '/api/chat';
+const ACCESS_CODE = '45$5'; // This is a casual front-end gate, not secure authentication.
+const DB_NAME = 'ace-workspace-db';
+const DB_VERSION = 1;
+let dbPromise;
+let chats = [];
+let activeChatId = null;
+let pendingFiles = [];
+let busy = false;
+let activeController = null;
+let activeModes = new Set();
+let flowTimer = null;
+let currentModal = null;
+let toastTimer = null;
+let memory = loadJSON('ace_memory_v1', []);
+let appSettings = loadJSON('ace_settings_v1', {
+  endpoint: DEFAULT_ENDPOINT,
+  model: 'openai/gpt-oss-20b',
+  apiKey: '',
+  rememberKey: false,
+  systemPrompt: 'You are Ace, a helpful assistant. Be accurate, practical, and clear. If you are uncertain, say so. Never claim to have opened or read an attachment unless its extracted contents were included in the message.',
+  theme: 'dark',
+  stream: true,
+  pinLockMinutes: 30
+});
+if (!Array.isArray(memory)) memory = [];
+if (!appSettings || typeof appSettings !== 'object') appSettings = {};
+appSettings.endpoint = DEFAULT_ENDPOINT;
+// Never retain API secrets in the browser's saved settings. Older Ace builds stored them locally.
+if (appSettings.apiKey) { delete appSettings.apiKey; }
+appSettings.model = FREE_MODELS.some(m=>m.id===appSettings.model) ? appSettings.model : 'openai/gpt-oss-20b';
+let localApiConfigured = false;
+if (localStorage.getItem('ace_settings_v1')) saveJSON('ace_settings_v1', appSettings);
+
+
+function loadJSON(key, fallback){ try { const value=localStorage.getItem(key); return value ? JSON.parse(value) : fallback; } catch { return fallback; } }
+function saveJSON(key, value){ try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch(e){ console.warn(e); return false; } }
+function openDB(){
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve,reject)=>{
+    if (!('indexedDB' in window)) return reject(new Error('IndexedDB is not available in this browser.'));
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onupgradeneeded = () => { const d=request.result; if(!d.objectStoreNames.contains('chats')) d.createObjectStore('chats',{keyPath:'id'}); };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error || new Error('Could not open local chat storage.'));
+  });
+  return dbPromise;
+}
+async function dbGetAll(){ const db=await openDB(); return new Promise((resolve,reject)=>{const req=db.transaction('chats','readonly').objectStore('chats').getAll(); req.onsuccess=()=>resolve(req.result||[]); req.onerror=()=>reject(req.error);}); }
+async function dbPut(chat){ const db=await openDB(); return new Promise((resolve,reject)=>{const tx=db.transaction('chats','readwrite');tx.objectStore('chats').put(chat);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error||new Error('Chat save failed'));}); }
+async function dbDelete(id){ const db=await openDB(); return new Promise((resolve,reject)=>{const tx=db.transaction('chats','readwrite');tx.objectStore('chats').delete(id);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error);}); }
+const uid = () => (crypto?.randomUUID ? crypto.randomUUID() : 'chat-'+Date.now()+'-'+Math.random().toString(36).slice(2,9));
+const escapeHTML = s => String(s ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function fmtDate(ts){ const d=new Date(ts); const now=new Date(); const days=Math.floor((new Date(now.getFullYear(),now.getMonth(),now.getDate())-new Date(d.getFullYear(),d.getMonth(),d.getDate()))/86400000); if(days===0)return 'TODAY'; if(days===1)return 'YESTERDAY'; if(days<7)return 'PREVIOUS 7 DAYS'; return 'OLDER'; }
+function titleFrom(text){ const clean=String(text||'New chat').replace(/\s+/g,' ').trim(); return clean.length>46 ? clean.slice(0,43)+'…' : (clean || 'New chat'); }
+function activeChat(){ return chats.find(c=>c.id===activeChatId) || null; }
+function normalizeModel(id){ return FREE_MODELS.some(m=>m.id===id) ? id : 'openai/gpt-oss-20b'; }
+function modelInfo(id=appSettings.model){ return FREE_MODELS.find(m=>m.id===id)||FREE_MODELS[0]; }
+function toast(msg, ms=3400){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),ms); }
+function setSaveState(ok, text){ $('#statusDot').classList.toggle('good',!!ok); $('#statusDot').classList.toggle('bad',ok===false); $('#saveState').textContent=text || (ok?'Saved on this device':'Not saved'); }
+function renderHistory(){
+  const q=$('#chatSearch').value.trim().toLowerCase();
+  const filtered=chats.filter(c=>!q || c.title.toLowerCase().includes(q) || c.messages.some(m=>(m.text||'').toLowerCase().includes(q)));
+  const groups={'TODAY':[],'YESTERDAY':[],'PREVIOUS 7 DAYS':[],'OLDER':[]};
+  filtered.sort((a,b)=>b.updatedAt-a.updatedAt).forEach(c=>(groups[fmtDate(c.updatedAt)]||groups.OLDER).push(c));
+  const nav=$('#history'); nav.replaceChildren();
+  const labels=Object.keys(groups);
+  for(const label of labels){ if(!groups[label].length)continue; const hd=document.createElement('div'); hd.className='group-label';hd.textContent=label;nav.append(hd);
+    for(const chat of groups[label]){
+      const row=document.createElement('div');row.className='chat-link'+(chat.id===activeChatId?' active':'');row.tabIndex=0;row.setAttribute('role','button');row.setAttribute('aria-label',chat.title);
+      const title=document.createElement('span');title.className='chat-title';title.textContent=chat.title; row.append(title);
+      const tools=document.createElement('span');tools.className='chat-tools';
+      const ren=document.createElement('button');ren.className='mini-action';ren.title='Rename chat';ren.textContent='✎';ren.addEventListener('click',e=>{e.stopPropagation();renameChat(chat.id)});
+      const del=document.createElement('button');del.className='mini-action';del.title='Delete chat';del.textContent='×';del.addEventListener('click',e=>{e.stopPropagation();deleteChat(chat.id)});
+      tools.append(ren,del);row.append(tools); row.addEventListener('click',()=>selectChat(chat.id));row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectChat(chat.id)}});nav.append(row);
+    }
+  }
+  if(!filtered.length){const empty=document.createElement('div');empty.className='small-muted';empty.style.padding='12px 10px';empty.textContent=q?'No matching chats':'No saved chats yet';nav.append(empty);}
+}
+function renderWelcome(){
+  $('#messages').replaceChildren();
+  const w=document.createElement('div');w.className='welcome';
+  w.innerHTML='<div class="welcome-mark">ϟ</div><h1>What are we working on?</h1><p>Your personal dashboard workspace</p><div class="suggestions"><button class="suggestion" data-suggest="Explain a difficult school topic step by step">Explain a topic</button><button class="suggestion" data-suggest="Help me study with a short quiz and answers">Study for a quiz</button><button class="suggestion" data-suggest="Help me organize this project into practical steps">Plan a project</button></div>';
+  $('#messages').append(w);$$('[data-suggest]',w).forEach(b=>b.addEventListener('click',()=>{ $('#prompt').value=b.dataset.suggest;autoGrow();$('#prompt').focus(); }));
+}
+function renderMarkdownSafe(markdown){
+  // Small dependency-free Markdown renderer. It escapes HTML before rendering any formatting.
+  const text=String(markdown??'').replace(/\r\n?/g,'\n');
+  const blocks=text.split(/```/);let out='';
+  for(let i=0;i<blocks.length;i++){
+    if(i%2===1){const firstNL=blocks[i].indexOf('\n');const lang=firstNL>=0?blocks[i].slice(0,firstNL).trim():'';const code=firstNL>=0?blocks[i].slice(firstNL+1):blocks[i];out+='<pre><code'+(lang?' class="language-'+escapeHTML(lang.replace(/[^\w-]/g,''))+'"':'')+'>'+escapeHTML(code.replace(/\n$/,''))+'</code></pre>';continue;}
+    const lines=blocks[i].split('\n');let inList=false;let listType='';let paragraph=[];
+    const flushP=()=>{if(paragraph.length){out+='<p>'+inlineMarkdown(paragraph.join('\n')).replace(/\n/g,'<br>')+'</p>';paragraph=[];}};
+    const flushL=()=>{if(inList){out+='</'+listType+'>';inList=false;listType='';}};
+    for(const line of lines){
+      const h=line.match(/^(#{1,3})\s+(.+)$/);const li=line.match(/^\s*([-*+] |\d+\. )(.+)$/);
+      if(h){flushP();flushL();const n=h[1].length;out+='<h'+n+'>'+inlineMarkdown(h[2])+'</h'+n+'>';}
+      else if(li){flushP();const type=/^\s*\d/.test(line)?'ol':'ul';if(!inList||listType!==type){flushL();out+='<'+type+'>';inList=true;listType=type;}out+='<li>'+inlineMarkdown(li[2])+'</li>';}
+      else if(!line.trim()){flushP();flushL();}
+      else {flushL();paragraph.push(line);}
+    }flushP();flushL();
+  }
+  return out || '<p></p>';
+}
+function inlineMarkdown(s){ let x=escapeHTML(s); x=x.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*]+)\*(?!\*)/g,'$1<em>$2</em>').replace(/~~(.+?)~~/g,'<del>$1</del>');return x; }
+function messageNode(msg,index){
+  const wrap=document.createElement('article');wrap.className='message '+(msg.role==='user'?'user':'assistant');wrap.dataset.messageId=msg.id||String(index);
+  if(msg.role==='user'){
+    const bub=document.createElement('div');bub.className='user-bubble';bub.textContent=msg.text||'';wrap.append(bub);
+    if(msg.images?.length){for(const image of msg.images){const im=document.createElement('img');im.className='message-image';im.src=image.dataUrl;im.alt=image.name||'Attached image';wrap.append(im);}}
+    if(msg.files?.length){const fileLine=document.createElement('div');fileLine.className='small-muted';fileLine.textContent=msg.files.map(f=>f.name).join(' · ');wrap.append(fileLine);}
+  } else {
+    wrap.classList.add('flow-card');
+    const head=document.createElement('div');head.className='message-head';head.innerHTML='<span class="bot-avatar">✧</span><span>Ace</span><span class="model-tag">'+escapeHTML(msg.modelName||'Groq')+'</span>';wrap.append(head);
+    const body=document.createElement('div');body.className='bot-body';body.innerHTML=renderMarkdownSafe(msg.text||'');wrap.append(body);
+    if(msg.thinking){const think=document.createElement('div');think.className='small-muted';think.style.paddingLeft='41px';think.textContent=msg.thinking;wrap.append(think);}
+    if(msg.status==='streaming'){const typing=document.createElement('div');typing.className='typing';typing.innerHTML='<span></span><span></span><span></span>';body.append(typing);}
+    const actions=document.createElement('div');actions.className='bot-actions';
+    const copy=document.createElement('button');copy.title='Copy response';copy.textContent='▢';copy.addEventListener('click',()=>copyText(msg.text||''));
+    const regen=document.createElement('button');regen.title='Regenerate response';regen.textContent='⟳';regen.addEventListener('click',()=>regenerate(msg.id));
+    const good=document.createElement('button');good.title='Helpful';good.textContent='♧';good.addEventListener('click',()=>toast('Thanks for the feedback.'));
+    const bad=document.createElement('button');bad.title='Not helpful';bad.textContent='♧';bad.style.transform='rotate(180deg)';bad.addEventListener('click',()=>toast('Feedback noted for this session.'));
+    actions.append(copy,regen,good,bad);wrap.append(actions);
+    if(msg.status==='streaming') { wrap.classList.add('flowing'); }
+  }
+  return wrap;
+}
+function renderMessages(){
+  const chat=activeChat();const root=$('#messages');root.replaceChildren();
+  if(!chat||!chat.messages.length){renderWelcome();return;}
+  chat.messages.forEach((msg,i)=>root.append(messageNode(msg,i)));
+  scrollBottom(false);
+}
+function scrollBottom(smooth=true){const sc=$('#chatScroll');sc.scrollTo({top:sc.scrollHeight,behavior:smooth?'smooth':'auto'});}
+function renderAll(){renderHistory();renderMessages();updateModelLabel();updateMemoryCount();}
+function updateModelLabel(){ const m=modelInfo();$('#activeModelLabel').textContent= m.name; }
+function updateMemoryCount(){ $('#memoryCount').textContent=memory.length;$('#memoryInline').textContent=memory.length+' memor'+(memory.length===1?'y':'ies')+' in context'; }
+function createChat(){const chat={id:uid(),title:'New chat',messages:[],createdAt:Date.now(),updatedAt:Date.now()};chats.unshift(chat);activeChatId=chat.id;persistChat(chat);renderAll();$('#prompt').focus();}
+async function persistChat(chat){try{await dbPut(chat);setSaveState(true,'Saved on this device');}catch(e){setSaveState(false,'Storage issue');toast('Could not save this chat locally: '+e.message);}}
+function selectChat(id){activeChatId=id;renderAll();if(window.matchMedia('(max-width:700px)').matches)$('#sidebar').classList.add('collapsed');}
+function renameChat(id){const chat=chats.find(c=>c.id===id);if(!chat)return;showModal('Rename chat',`<div class="field"><label for="renameTitle">Chat title</label><input id="renameTitle" maxlength="90" value="${escapeHTML(chat.title)}" /></div>`,[{label:'Cancel',action:closeModal},{label:'Save title',primary:true,action:()=>{const v=$('#renameTitle')?.value.trim();if(v){chat.title=v;chat.updatedAt=Date.now();persistChat(chat);renderHistory();}closeModal();}}]);setTimeout(()=>$('#renameTitle')?.focus(),30);}
+async function deleteChat(id){const chat=chats.find(c=>c.id===id);if(!chat)return;const yes=await confirmModal('Delete this chat?',`“${escapeHTML(chat.title)}” will be removed from this browser. This cannot be undone.`);if(!yes)return;chats=chats.filter(c=>c.id!==id);try{await dbDelete(id);}catch{}if(activeChatId===id)activeChatId=chats[0]?.id||null;renderAll();toast('Chat deleted.');}
+function showModal(title,body,actions=[]){closeModal();const host=$('#modalHost');host.innerHTML=`<div class="overlay" id="activeOverlay"><section class="modal" role="dialog" aria-modal="true" aria-label="${escapeHTML(title)}"><div class="modal-head"><h2>${escapeHTML(title)}</h2><button class="icon-btn" id="modalClose" aria-label="Close">×</button></div><div class="modal-content">${body}</div><div class="modal-actions" id="modalActions"></div></section></div>`;currentModal=$('#activeOverlay');$('#modalClose').addEventListener('click',closeModal);currentModal.addEventListener('click',e=>{if(e.target===currentModal)closeModal();});const actionRoot=$('#modalActions');actions.forEach(a=>{const b=document.createElement('button');b.className='btn'+(a.primary?' primary':'');b.textContent=a.label;b.addEventListener('click',a.action);actionRoot.append(b);});return currentModal;}
+function closeModal(){if(currentModal){currentModal.remove();currentModal=null;} }
+function confirmModal(title,content){return new Promise(resolve=>{showModal(title,`<div class="help" style="font-size:14px">${content}</div>`,[{label:'Cancel',action:()=>{closeModal();resolve(false)}},{label:'Delete',primary:true,action:()=>{closeModal();resolve(true)}}]);});}
+async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard.');}catch{const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();const ok=document.execCommand('copy');ta.remove();toast(ok?'Copied to clipboard.':'Copy failed.');}}
+function downloadFile(name,content,type='text/plain'){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function exportChat(){const chat=activeChat();if(!chat){toast('There is no conversation to export.');return;}const body='# '+chat.title+'\n\n'+chat.messages.map(m=>'## '+(m.role==='user'?'You':'Ace')+'\n\n'+(m.text||'')+(m.files?.length?'\n\nAttachments: '+m.files.map(f=>f.name).join(', '):'')).join('\n\n---\n\n');downloadFile((chat.title||'ace-chat').replace(/[^a-z0-9-_ ]/gi,'').trim().replace(/\s+/g,'-')+'.md',body,'text/markdown');}
+function printChat(){const chat=activeChat();if(!chat){toast('There is no conversation to print.');return;}const html=`<!doctype html><html><head><title>${escapeHTML(chat.title)}</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:780px;margin:40px auto;color:#111}h1{font-size:24px}h2{font-size:16px;border-bottom:1px solid #ddd;padding-bottom:4px}pre{background:#eee;padding:12px;overflow-wrap:anywhere}article{margin:25px 0;white-space:pre-wrap}</style></head><body><h1>${escapeHTML(chat.title)}</h1>${chat.messages.map(m=>`<article><h2>${m.role==='user'?'You':'Ace'}</h2>${renderMarkdownSafe(m.text||'')}</article>`).join('')}</body></html>`;const w=window.open('','_blank');if(!w){toast('Allow pop-ups to print this chat.');return;}w.document.write(html);w.document.close();w.focus();w.print();}
+function showSettings(){
+  const modelOptions=FREE_MODELS.map(m=>`<option value="${m.id}" ${appSettings.model===m.id?'selected':''}>${m.name} — ${m.note}</option>`).join('');
+  showModal('Settings',`
+    <div class="key-warning">Ace uses a tiny local helper running only on this Chromebook. Your Groq key is sent to localhost and held in the helper's memory; it is not saved in this HTML or browser storage. Stop the helper to clear the key from its memory. Never share the key or upload it to a public repository.</div>
+    <div class="field"><label for="apiKeyInput">Groq API key</label><input id="apiKeyInput" type="password" autocomplete="off" placeholder="Paste a NEW Groq key here" value="" /></div>
+    <div id="localApiStatus" class="connection-result">Checking local helper…</div>
+    <div class="field"><label for="modelSelect">Default model</label><select id="modelSelect">${modelOptions}</select><div class="help">GPT-OSS 20B is the default. GPT-OSS 120B is a larger general model. Qwen 3.8 27B supports image input. Free-tier limits depend on your Groq account and can return HTTP 429.</div></div>
+    <div class="field"><label for="systemPromptInput">Assistant instructions</label><textarea id="systemPromptInput">${escapeHTML(appSettings.systemPrompt||'')}</textarea></div>
+    <div class="field"><label for="lockMinutes">Auto-lock after inactivity</label><select id="lockMinutes"><option value="5" ${appSettings.pinLockMinutes===5?'selected':''}>5 minutes</option><option value="15" ${appSettings.pinLockMinutes===15?'selected':''}>15 minutes</option><option value="30" ${appSettings.pinLockMinutes===30?'selected':''}>30 minutes</option><option value="60" ${appSettings.pinLockMinutes===60?'selected':''}>60 minutes</option><option value="0" ${appSettings.pinLockMinutes===0?'selected':''}>Off</option></select></div>
+    <div id="testResult" class="connection-result hidden"></div>
+    <div class="help">The local helper must be running at http://127.0.0.1:8765. This avoids browser-to-Groq CORS issues, but does not guarantee Groq itself is reachable from every network.</div>
+  `,[{label:'Clear API key',action:async()=>{try{const r=await fetch('/api/key',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({api_key:''})});if(!r.ok)throw new Error(await r.text());localApiConfigured=false;$('#apiKeyInput').value='';$('#localApiStatus').className='connection-result';$('#localApiStatus').textContent='No API key stored in the helper.';toast('Local helper key cleared.');}catch(e){toast('Could not clear the key: '+e.message,5000);}}},{label:'Test connection',action:()=>testConnectionFromSettings()},{label:'Save settings',primary:true,action:()=>saveSettingsFromModal()}]);
+  refreshLocalKeyStatus();
+}
+async function refreshLocalKeyStatus(){
+  const el=$('#localApiStatus');if(!el)return;
+  try{const r=await fetch('/api/status',{cache:'no-store'});const d=await r.json();localApiConfigured=!!d.key_configured;el.className='connection-result '+(localApiConfigured?'ok':'');el.textContent=localApiConfigured?'Local helper is running. A key is loaded in helper memory.':'Local helper is running, but no API key is loaded.';}
+  catch(e){localApiConfigured=false;el.className='connection-result bad';el.textContent='Cannot reach the local helper. Open Ace from http://127.0.0.1:8765 and start ace_local.py first.';}
+}
+async function installKeyInHelper(key){
+  const r=await fetch('/api/key',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({api_key:key})});
+  const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'The local helper rejected the key.');localApiConfigured=!!d.key_configured;return d;
+}
+function saveSettings(){
+  // Explicitly strip any legacy API key fields before persisting preferences.
+  delete appSettings.apiKey;appSettings.endpoint=DEFAULT_ENDPOINT;saveJSON('ace_settings_v1',appSettings);
+}
+async function saveSettingsFromModal(){
+  const key=$('#apiKeyInput')?.value.trim()||'';const model=$('#modelSelect')?.value||'openai/gpt-oss-20b';const systemPrompt=$('#systemPromptInput')?.value.trim()||'You are Ace, a helpful assistant. Be accurate, practical, and clear.';const lock=parseInt($('#lockMinutes')?.value||'30',10);
+  try{if(key){await installKeyInHelper(key);$('#apiKeyInput').value='';}appSettings={...appSettings,apiKey:'',endpoint:DEFAULT_ENDPOINT,model:normalizeModel(model),systemPrompt,pinLockMinutes:Number.isFinite(lock)?lock:30};saveSettings();updateModelLabel();closeModal();toast(localApiConfigured?'Settings saved. API key remains only in helper memory.':'Settings saved. Enter a Groq API key in Settings to start chatting.');}
+  catch(e){const el=$('#testResult');if(el){el.className='connection-result bad';el.textContent='Could not save key to local helper: '+e.message;}else toast('Could not save settings: '+e.message,5000);}
+}
+async function testConnectionFromSettings(){
+  const key=$('#apiKeyInput')?.value.trim()||'';const model=$('#modelSelect')?.value||'openai/gpt-oss-20b';const result=$('#testResult');if(!result)return;
+  result.className='connection-result';result.textContent='Testing local helper and Groq model '+model+'…';const start=performance.now();
+  try{if(key){await installKeyInHelper(key);$('#apiKeyInput').value='';}const res=await fetch('/api/test',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model})});const data=await res.json().catch(()=>({}));if(!res.ok){result.className='connection-result bad';result.textContent='Connection test failed (HTTP '+res.status+').\n'+(data.error||data.message||'Unknown error');return;}localApiConfigured=true;result.className='connection-result ok';result.textContent='Groq connection succeeded in '+Math.round(performance.now()-start)+' ms.\nModel: '+model+'\nResponse: '+(data.response||'The model responded successfully.');await refreshLocalKeyStatus();}
+  catch(e){result.className='connection-result bad';result.textContent='Could not complete the test.\n'+(e?.message||String(e))+'\n\nMake sure ace_local.py is running and a NEW valid Groq key is loaded.';}
+}
+function showMemory(){
+  const list=memory.length?'<div class="memory-list">'+memory.map((item,i)=>`<div class="memory-item"><span>${escapeHTML(item)}</span><button class="icon-btn" data-memory-delete="${i}" aria-label="Delete memory">×</button></div>`).join('')+'</div>':'<div class="empty-memory">No saved memories yet. Add only information you want included in future conversations.</div>';
+  showModal('Memory',`${list}<div class="field"><label for="newMemory">Add a memory</label><textarea id="newMemory" placeholder="Example: Keep explanations direct and step-by-step."></textarea></div><div class="help">Memories are stored on this browser and added to new requests. They are not automatically extracted from every chat.</div>`,[{label:'Close',action:closeModal},{label:'Add memory',primary:true,action:()=>{const v=$('#newMemory')?.value.trim();if(v){memory.push(v);saveJSON('ace_memory_v1',memory);updateMemoryCount();showMemory();toast('Memory saved locally.');}}}]);
+  $$('[data-memory-delete]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.memoryDelete);memory.splice(i,1);saveJSON('ace_memory_v1',memory);updateMemoryCount();showMemory();}));
+}
+function showAccessInfo(){
+  $('#pinScreen').classList.add('hidden');showModal('Get an access code',`<div class="access-info">Ace is a private personal workspace. To use it, request the current access code from the person who shared this page with you. This demo does not send requests or issue codes automatically.</div><div class="help" style="margin-top:12px">The local access code is a casual barrier, not secure account authentication. Anyone who can inspect the HTML can find the front-end code.</div>`,[{label:'Back to unlock',primary:true,action:()=>{closeModal();$('#pinScreen').classList.remove('hidden');}}]);
+}
+function lockScreen(){busy=false;if(activeController)activeController.abort();$('#pinScreen').classList.remove('hidden');$('#accessCode').value='';$('#pinError').textContent='';$('#accessCode').focus();toast('Workspace locked.');}
+function enterApp(){sessionStorage.setItem('ace_unlocked_v1','yes');sessionStorage.setItem('ace_last_active_v1',String(Date.now()));$('#pinScreen').classList.add('hidden');$('#app').classList.remove('hidden');}
+function handleActivity(){if($('#pinScreen').classList.contains('hidden'))sessionStorage.setItem('ace_last_active_v1',String(Date.now()));}
+let lockCheck=null;
+function startAutoLock(){clearInterval(lockCheck);lockCheck=setInterval(()=>{if($('#pinScreen').classList.contains('hidden')&&appSettings.pinLockMinutes>0){const last=Number(sessionStorage.getItem('ace_last_active_v1')||Date.now());if(Date.now()-last>appSettings.pinLockMinutes*60000)lockScreen();}},15000);}
+function autoGrow(){const t=$('#prompt');t.style.height='auto';t.style.height=Math.min(t.scrollHeight,190)+'px';}
+function setMode(mode){if(mode==='web'){toast('Live web search is not configured in this version.');return;}if(activeModes.has(mode))activeModes.delete(mode);else activeModes.add(mode);$$('[data-mode]').forEach(b=>b.classList.toggle('on',activeModes.has(b.dataset.mode)));}
+function composeSystem(modeSet=activeModes){let s=appSettings.systemPrompt||'You are Ace, a helpful assistant.';if(memory.length)s+='\n\nUser-approved memories:\n'+memory.map(x=>'- '+x).join('\n');if(modeSet.has('think'))s+='\nUse careful reasoning and give a clear answer. Do not expose hidden private reasoning; give concise explanations of conclusions.';if(modeSet.has('deep'))s+='\nGive a thorough, structured answer with relevant details and caveats.';if(modeSet.has('essay'))s+='\nUse polished essay-style prose, with an introduction, coherent body paragraphs, and conclusion when appropriate.';return s;}
+function dataURLFromFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Could not read '+file.name));reader.readAsDataURL(file);});}
+function loadPDFJS(){return new Promise((resolve,reject)=>{if(window.pdfjsLib)return resolve(window.pdfjsLib);if(window.__acePdfLoading){window.__acePdfLoading.then(resolve,reject);return;}window.__acePdfLoading=new Promise((res,rej)=>{const script=document.createElement('script');script.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';script.onload=()=>{if(!window.pdfjsLib){rej(new Error('PDF.js loaded but was not available.'));return;}window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';res(window.pdfjsLib);};script.onerror=()=>rej(new Error('Could not load the PDF reader. The CDN may be blocked, or the device may be offline.'));document.head.append(script);});window.__acePdfLoading.then(resolve,reject);});}
+async function extractPDF(file){if(file.size>18*1024*1024)throw new Error('PDF exceeds the 18 MB local processing limit.');const pdfjs=await loadPDFJS();const buf=await file.arrayBuffer();const pdf=await pdfjs.getDocument({data:buf}).promise;if(pdf.numPages>40)throw new Error('This version processes at most 40 PDF pages at a time.');let pages=[];for(let n=1;n<=pdf.numPages;n++){const p=await pdf.getPage(n);const c=await p.getTextContent();pages.push(c.items.map(i=>i.str).join(' '));}const text=pages.map((p,i)=>`[Page ${i+1}]\n${p}`).join('\n\n');if(text.replace(/\s/g,'').length<30)throw new Error('This PDF appears to contain mostly scanned pages or images. Text extraction found almost nothing. This version does not run free OCR automatically; use a text-based PDF or attach page screenshots to the vision model.');return text.slice(0,80000);}
+async function extractDocx(file){
+  // Minimal DOCX text extraction from its ZIP container using browser-native decompression.
+  const buf=await file.arrayBuffer();const u=new Uint8Array(buf);const view=new DataView(buf);let eocd=-1;for(let i=u.length-22;i>=Math.max(0,u.length-65557);i--){if(view.getUint32(i,true)===0x06054b50){eocd=i;break;}}if(eocd<0)throw new Error('Could not read the DOCX ZIP directory.');const count=view.getUint16(eocd+10,true);const cdOff=view.getUint32(eocd+16,true);let off=cdOff;for(let i=0;i<count;i++){if(view.getUint32(off,true)!==0x02014b50)break;const comp=view.getUint16(off+10,true),csize=view.getUint32(off+20,true),nlen=view.getUint16(off+28,true),elen=view.getUint16(off+30,true),clen=view.getUint16(off+32,true),localOff=view.getUint32(off+42,true);const name=new TextDecoder().decode(u.slice(off+46,off+46+nlen));if(name==='word/document.xml'){const ln=view.getUint16(localOff+26,true),le=view.getUint16(localOff+28,true),start=localOff+30+ln+le;let bytes=u.slice(start,start+csize);if(comp===8){if(!('DecompressionStream'in window))throw new Error('This browser cannot decompress DOCX content.');const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));bytes=new Uint8Array(await new Response(stream).arrayBuffer());}else if(comp!==0)throw new Error('DOCX compression method is not supported.');const xml=new DOMParser().parseFromString(new TextDecoder().decode(bytes),'application/xml');return Array.from(xml.getElementsByTagName('w:p')).map(p=>Array.from(p.getElementsByTagName('w:t')).map(t=>t.textContent||'').join('')).join('\n').slice(0,80000);}off+=46+nlen+elen+clen;}throw new Error('Could not find the main document text inside this DOCX file.');
+}
+async function processFiles(files){const allowed=files.filter(f=>f.size<=18*1024*1024);if(allowed.length<files.length)toast('Files over 18 MB were skipped.');for(const f of allowed){if(pendingFiles.length>=6){toast('Up to 6 attachments per message.');break;}if(pendingFiles.some(x=>x.name===f.name&&x.size===f.size)){continue;}const ext=(f.name.split('.').pop()||'').toLowerCase();const isImageFile=f.type.startsWith('image/')||['png','jpg','jpeg','webp'].includes(ext);if(isImageFile&&pendingFiles.filter(x=>x.kind==='image').length>=3){toast('Qwen 3.8 27B supports at most 3 images per request; extra image skipped.');continue;}const item={id:uid(),file:f,name:f.name,size:f.size,type:f.type,kind:'unsupported',text:'',dataUrl:null,loading:true,error:''};pendingFiles.push(item);renderFilePreviews();try{
+    if(f.type.startsWith('image/')||['png','jpg','jpeg','webp'].includes(ext)){if(!['png','jpg','jpeg','webp'].includes(ext))throw new Error('Use a PNG, JPG, or WEBP image.');if(f.size>8*1024*1024)throw new Error('Images must be 8 MB or smaller.');item.kind='image';item.dataUrl=await dataURLFromFile(f);}
+    else if(ext==='pdf'||f.type==='application/pdf'){item.kind='text';item.text=await extractPDF(f);}
+    else if(ext==='docx'){item.kind='text';item.text=await extractDocx(f);}
+    else if(['txt','md','csv','json','html','htm','css','js','xml'].includes(ext)||f.type.startsWith('text/')){item.kind='text';item.text=(await f.text()).slice(0,80000);}
+    else {item.kind='unsupported';item.error='This format is not supported yet. Try a PDF, DOCX, text file, CSV, JSON, HTML/CSS/JS, or image.';}
+  }catch(e){item.error=e?.message||String(e);item.kind='error';}finally{item.loading=false;renderFilePreviews();}}
+}
+function renderFilePreviews(){const root=$('#filePreviews');root.replaceChildren();for(const item of pendingFiles){const chip=document.createElement('div');chip.className='file-chip';const symbol=item.kind==='image'?'▧':item.kind==='text'?'▤':'⚠';const name=document.createElement('span');name.textContent=symbol+' '+item.name+(item.loading?' · reading…':item.error?' · unavailable':'');name.className='fname';name.title=item.error||item.name;if(item.error)name.style.color='#f2aaaa';const remove=document.createElement('button');remove.textContent='×';remove.title='Remove attachment';remove.addEventListener('click',()=>{pendingFiles=pendingFiles.filter(x=>x.id!==item.id);renderFilePreviews();});chip.append(name,remove);root.append(chip);}}
+function buildUserContent(text, files){const usable=files.filter(f=>!f.loading&&!f.error);const content=[];let promptText=text||'';const textFiles=usable.filter(f=>f.kind==='text');if(textFiles.length){promptText+='\n\nAttached file contents:\n'+textFiles.map(f=>`--- BEGIN FILE: ${f.name} ---\n${f.text}\n--- END FILE: ${f.name} ---`).join('\n\n');}if(promptText)content.push({type:'text',text:promptText});for(const f of usable.filter(f=>f.kind==='image'))content.push({type:'image_url',image_url:{url:f.dataUrl}});return content.length===1&&content[0].type==='text'?promptText:content;}
+function addMemoryHint(){return memory.length?' (memory included)':'';}
+function updateChatTitle(chat,firstText){if(chat.title==='New chat'||!chat.title){chat.title=titleFrom(firstText||'New chat');}}
+function requestPayload(chat, stream, modes=activeModes){const messages=[{role:'system',content:composeSystem(modes)}];for(const m of chat.messages){if(m.role==='assistant'&&(m.status==='error'||m.status==='streaming'))continue;if(m.role==='user'){
+      let content=m.text||'';if(m.extractedText?.length)content+='\n\nAttached file contents:\n'+m.extractedText.map(f=>`--- BEGIN FILE: ${f.name} ---\n${f.text}\n--- END FILE: ${f.name} ---`).join('\n\n');
+      const parts=[];if(content)parts.push({type:'text',text:content});for(const img of (m.images||[]))parts.push({type:'image_url',image_url:{url:img.dataUrl}});messages.push({role:'user',content:parts.length===1&&parts[0].type==='text'?content:parts});
+    } else {messages.push({role:'assistant',content:m.text||''});}}
+  return {model:chat.messages.some(m=>m.role==='user'&&m.images?.length)?'qwen/qwen3.8-27b':appSettings.model,messages,stream,...(stream?{}:{max_completion_tokens:2048})};}
+async function sendMessage(retryText=null, regenMsgId=null){
+  if(busy)return;const inputText=(retryText??$('#prompt').value).trim();const files=retryText===null?[...pendingFiles]:[];if(!inputText&&!files.length&&!regenMsgId)return;
+  const invalid=files.find(f=>f.loading||f.error);if(invalid){toast(invalid.loading?'Wait for the attachment to finish reading.':invalid.name+': '+invalid.error);return;}
+  try{const sr=await fetch('/api/status',{cache:'no-store'});const sd=await sr.json();localApiConfigured=!!sd.key_configured;}catch{toast('Ace cannot reach its local helper. Start ace_local.py and open http://127.0.0.1:8765.');return;}if(!localApiConfigured){toast('Add your Groq API key in Settings first.');showSettings();return;}
+  let chat=activeChat();if(!chat){const c={id:uid(),title:'New chat',messages:[],createdAt:Date.now(),updatedAt:Date.now()};chats.unshift(c);activeChatId=c.id;chat=c;}
+  const messageText=inputText||'Please analyze the attached file(s).';
+  let extractedText=[];let images=[];let fileMeta=[];if(files.length){extractedText=files.filter(f=>f.kind==='text').map(f=>({name:f.name,text:f.text}));images=files.filter(f=>f.kind==='image').map(f=>({name:f.name,dataUrl:f.dataUrl}));fileMeta=files.map(f=>({name:f.name,size:f.size,kind:f.kind}));}
+  if(regenMsgId){const idx=chat.messages.findIndex(m=>m.id===regenMsgId);if(idx>=0){chat.messages=chat.messages.slice(0,idx);}}
+  else {chat.messages.push({id:uid(),role:'user',text:messageText,images,extractedText,files:fileMeta,createdAt:Date.now()});}
+  updateChatTitle(chat,messageText);chat.updatedAt=Date.now();
+  const bot={id:uid(),role:'assistant',text:'',modelName:modelInfo(images.length?'qwen/qwen3.8-27b':appSettings.model).name,status:'streaming',thinking:activeModes.has('deep')?'Generating a detailed response…':''};chat.messages.push(bot);const sentModes=new Set(activeModes);activeModes.clear();$$('[data-mode]').forEach(b=>b.classList.remove('on'));$('#prompt').value='';autoGrow();pendingFiles=[];renderFilePreviews();busy=true;$('#sendBtn').classList.add('hidden');$('#stopBtn').classList.remove('hidden');$('#prompt').disabled=true;renderAll();
+  activeController=new AbortController();let firstChunk=false;
+  try{
+    const payload=requestPayload(chat,appSettings.stream,sentModes);if(payload.model!==appSettings.model){bot.modelName=modelInfo(payload.model).name;}
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json','Accept':appSettings.stream?'text/event-stream':'application/json'},body:JSON.stringify(payload),signal:activeController.signal});
+    if(!res.ok){const t=await res.text();let message=t;try{const j=JSON.parse(t);message=j?.error?.message||j?.message||t;}catch{}throw new Error('Local helper / Groq returned HTTP '+res.status+': '+String(message).slice(0,700));}
+    if(appSettings.stream&&res.body){const reader=res.body.getReader();const decoder=new TextDecoder();let buffer='';while(true){const {value,done}=await reader.read();if(done)break;buffer+=decoder.decode(value,{stream:true});const lines=buffer.split('\n');buffer=lines.pop()||'';for(const line of lines){const trimmed=line.trim();if(!trimmed.startsWith('data:'))continue;const raw=trimmed.slice(5).trim();if(!raw||raw==='[DONE]')continue;let chunk;try{chunk=JSON.parse(raw);}catch{continue;}if(chunk.error)throw new Error(chunk.error.message||'Streaming request failed.');const piece=chunk.choices?.[0]?.delta?.content;if(typeof piece==='string'&&piece){bot.text+=piece;firstChunk=true;bot.status='streaming';updateStreamingMessage(bot);}}}if(buffer.trim().startsWith('data:')){const raw=buffer.trim().slice(5).trim();if(raw&&raw!=='[DONE]'){try{const chunk=JSON.parse(raw);const piece=chunk.choices?.[0]?.delta?.content;if(typeof piece==='string')bot.text+=piece;}catch{}}}}
+    else{const data=await res.json();const content=data?.choices?.[0]?.message?.content;if(typeof content==='string')bot.text=content;else if(Array.isArray(content))bot.text=content.map(p=>p.text||'').join('\n');else bot.text='The API returned a response, but its content format was not recognized.';}
+    bot.status='done';if(!bot.text.trim())bot.text='The API returned no text. Try another free model or inspect the API response in Settings.';chat.updatedAt=Date.now();await persistChat(chat);renderAll();startFlowFinish(bot.id);if(!firstChunk)scrollBottom();
+  }catch(e){if(e?.name==='AbortError'){bot.status='stopped';if(!bot.text)bot.text='Generation stopped.';}else{bot.status='error';bot.text='**Request failed**\n\n'+(e?.message||String(e))+'\n\nThis version sends requests through the local helper, so browser CORS to Groq is avoided. Check that the helper is running, the key is valid, the selected model is available, and your network can reach Groq.';}
+    chat.updatedAt=Date.now();await persistChat(chat);renderAll();
+  }finally{busy=false;activeController=null;$('#sendBtn').classList.remove('hidden');$('#stopBtn').classList.add('hidden');$('#prompt').disabled=false;$('#prompt').focus();}
+}
+function updateStreamingMessage(bot){const node=$(`[data-message-id="${CSS.escape(bot.id)}"]`);if(!node){renderMessages();return;}const body=$('.bot-body',node);if(body){body.innerHTML=renderMarkdownSafe(bot.text||'');if(!bot.text){const typing=document.createElement('div');typing.className='typing';typing.innerHTML='<span></span><span></span><span></span>';body.append(typing);}}scrollBottom(false);}
+function startFlowFinish(id){const node=$(`[data-message-id="${CSS.escape(id)}"]`);if(!node)return;node.classList.add('flowing');clearTimeout(flowTimer);flowTimer=setTimeout(()=>{node.classList.remove('flowing');},1800);}
+function stopGeneration(){if(activeController)activeController.abort();}
+function regenerate(messageId){const chat=activeChat();if(!chat||busy)return;const idx=chat.messages.findIndex(m=>m.id===messageId);if(idx<0||chat.messages[idx].role!=='assistant')return;sendMessage('',messageId);}
+function settingsShortcutModel(){showModal('Choose a free model',`<div class="help">Pick a model for new requests. Image messages automatically use Qwen 3.8 27B.</div><div class="field"><label for="quickModel">Model</label><select id="quickModel">${FREE_MODELS.map(m=>`<option value="${m.id}" ${appSettings.model===m.id?'selected':''}>${m.name} — ${m.note}</option>`).join('')}</select></div>`,[{label:'Cancel',action:closeModal},{label:'Apply',primary:true,action:()=>{appSettings.model=normalizeModel($('#quickModel').value);saveSettings();updateModelLabel();closeModal();toast('Default model set to '+modelInfo().name);}}]);}
+function handlePinSubmit(e){e.preventDefault();if($('#accessCode').value===ACCESS_CODE){enterApp();$('#pinError').textContent='';$('#accessCode').value='';startAutoLock();initializeWorkspace();}else{$('#pinError').textContent='That access code is not correct.';$('#accessCode').select();}}
+async function initializeWorkspace(){try{chats=await dbGetAll();chats.sort((a,b)=>b.updatedAt-a.updatedAt);activeChatId=chats[0]?.id||null;setSaveState(true,'Saved on this device');}catch(e){chats=[];activeChatId=null;setSaveState(false,'Local storage unavailable');toast('Browser chat storage could not be opened. '+e.message,5000);}renderAll();}
+
+// Event wiring
+$('#pinForm').addEventListener('submit',handlePinSubmit);
+$('#accessRequestBtn').addEventListener('click',showAccessInfo);
+$('#newChatBtn').addEventListener('click',createChat);
+$('#collapseSidebar').addEventListener('click',()=>$('#sidebar').classList.add('collapsed'));
+$('#showSidebar').addEventListener('click',()=>$('#sidebar').classList.toggle('collapsed'));
+$('#chatSearch').addEventListener('input',renderHistory);
+$('#settingsBtn').addEventListener('click',showSettings);$('#topSettingsBtn').addEventListener('click',showSettings);$('#memoryBtn').addEventListener('click',showMemory);$('#memoryInline').addEventListener('click',e=>{e.preventDefault();showMemory();});
+$('#smartModelBtn').addEventListener('click',settingsShortcutModel);
+$('#exportBtn').addEventListener('click',exportChat);$('#printBtn').addEventListener('click',printChat);
+$('#chatModeBtn').addEventListener('click',()=>{$('#chatModeBtn').classList.add('active');$('#agentModeBtn').classList.remove('active');});
+$('#agentModeBtn').addEventListener('click',()=>{toast('Agent mode is not implemented in this single-file version; Chat mode is ready.');});
+$('#prompt').addEventListener('input',autoGrow);
+$('#prompt').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}});
+$('#sendBtn').addEventListener('click',()=>sendMessage());$('#stopBtn').addEventListener('click',stopGeneration);
+$('#attachBtn').addEventListener('click',()=>$('#fileInput').click());$('#fileInput').addEventListener('change',async e=>{await processFiles(Array.from(e.target.files||[]));e.target.value='';});
+$$('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#chatSearch').focus();}if(e.key==='Escape'&&currentModal)closeModal();});
+['pointerdown','keydown','touchstart'].forEach(name=>document.addEventListener(name,handleActivity,{passive:true}));
+window.addEventListener('beforeunload',()=>{if(busy&&activeController)activeController.abort();});
+try{if(sessionStorage.getItem('ace_unlocked_v1')==='yes'){const last=Number(sessionStorage.getItem('ace_last_active_v1')||Date.now());if(!appSettings.pinLockMinutes||Date.now()-last<appSettings.pinLockMinutes*60000){enterApp();startAutoLock();initializeWorkspace();}else{sessionStorage.removeItem('ace_unlocked_v1');}}}catch{}
+})();
+</script>
+</body>
+</html>
